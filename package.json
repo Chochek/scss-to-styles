@@ -1,7 +1,7 @@
 {
   "name": "scss-to-styles",
   "version": "0.1.0",
-  "homepage": "https://chochek.github.io",
+  "homepage": "https://chochek.github.io/scss-to-styles",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
