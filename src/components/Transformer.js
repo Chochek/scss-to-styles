@@ -24,10 +24,7 @@ export class Transformer extends Component {
     let pretty = JSON.stringify(ugly, undefined, 2).replace(/"/gm, '\'').replace(/'(.*)':/gm, '$1:').replace(/'([0-9]+|\$.*)'/gm, '$1')
 
     pretty = pretty.replace(/: '(.*\$[a-zA-Z0-9\-]*.*)'/gm, (match, m1) => {
-      return `: \`${m1}\``.replace(/\$([a-zA-Z0-9\-]*)/gm, (match, m1) => {
-        console.log(match)
-        return `\${${match}}`
-      })
+      return `: \`${m1}\``.replace(/\$([a-zA-Z0-9\-]*)/gm, match => `\${${match}}`)
     })
 
     pretty = pretty.replace(/\$([^{][a-zA-Z0-9\-]*)/gm, (match, m1) => {
@@ -40,7 +37,7 @@ export class Transformer extends Component {
   render = () => (
     <StyledDiv css={wrapperStyles}>
       <Textarea css={textareaStyles} changeCallback={this.handleChanges}></Textarea>
-      <Button css={buttonStyles} onClick={this.transformStyles}>Convert</Button>
+      <Button css={buttonStyles} onClick={this.transformStyles}>Transform</Button>
       <Textarea css={textareaStyles} readOnly={true} value={this.state.styles}></Textarea>
     </StyledDiv>
   )
