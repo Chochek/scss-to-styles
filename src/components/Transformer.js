@@ -21,7 +21,19 @@ export class Transformer extends Component {
 
   transformStyles = () => {
     const ugly = transform(this.state.scss)
-    const pretty = JSON.stringify(ugly, undefined, 2).replace(/"/gm, '\'').replace(/'(.*)':/gm, '$1:').replace(/'([0-9]+|\$.*)'/gm, '$1')
+    let pretty = JSON.stringify(ugly, undefined, 2).replace(/"/gm, '\'').replace(/'(.*)':/gm, '$1:').replace(/'([0-9]+|\$.*)'/gm, '$1')
+
+    pretty = pretty.replace(/: '(.*\$[a-zA-Z0-9\-]*.*)'/gm, (match, m1) => {
+      return `: \`${m1}\``.replace(/\$([a-zA-Z0-9\-]*)/gm, (match, m1) => {
+        console.log(match)
+        return `\${${match}}`
+      })
+    })
+
+    pretty = pretty.replace(/\$([^{][a-zA-Z0-9\-]*)/gm, (match, m1) => {
+      return `colors.${m1.replace('-', '_')}`
+    })
+
     this.setState({ styles: pretty })
   }
 
