@@ -13,3 +13,9 @@ jobs:
         uses: heinrichreimer/github-changelog-generator-action@v2.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+      - name: write file
+        uses: DamianReeves/write-file-action
+        with:
+          path: ${{ env.home}}/CHANGELOG.md
+          contents: ${{ steps.get_data.outputs.changelog }}
+          write-mode: overwrite
